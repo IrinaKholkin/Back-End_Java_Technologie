@@ -1,12 +1,8 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.TransferQueue;
 
-public class Timer implements Runnable{
-
-    private int timeOut = 1;
-
-//    Cntr+Alt+V Ctrl+Alt+C
+public class Timer implements Runnable {
+    private  int timeOut = 2;
 
     public void setTimeOut(int timeOut) {
         this.timeOut = timeOut;
@@ -14,10 +10,12 @@ public class Timer implements Runnable{
 
     @Override
     public void run() {
-        while (true) {
+        while (true){
             System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss")));
+            //int qwr = Math.min(10, 11);// Ctrl+Alt+V    /// Ctrl+alt+C
+
             try {
-                Thread.sleep(timeOut*1000);
+                Thread.sleep(timeOut *1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

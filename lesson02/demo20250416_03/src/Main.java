@@ -11,19 +11,18 @@ public class Main {
         thread.start();
 
         while (true) {
-            System.out.println("Input time-out or press r for stop");
+            System.out.println("Input time-out or press q for stop");
             String str = scanner.nextLine();
-            if (str.equals("r")) {
+            if (str.equals("q")) {
                 break;
             } else {
                 try {
-                    timer.setTimeOut(Integer.parseInt(str));
-                } catch (Exception e) {
+                    timer.setTimeOut(Integer.parseInt(str));  // Integer.parseInt -  convert str -> int
+                } catch (Exception e){
                     timer.setTimeOut(3);
                 }
             }
         }
         System.out.println("Main finish");
-
     }
 }
