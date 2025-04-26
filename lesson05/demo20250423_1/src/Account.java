@@ -1,4 +1,7 @@
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Account {
+    //private ReentrantLock lock = new ReentrantLock();
     private final String iban;
     private final String owner;
     private double balance;
@@ -6,22 +9,27 @@ public class Account {
     public Account(String iban, String owner, double balance) {
         this.iban = iban;
         this.owner = owner;
-        this.balance = balance;}
-
-    public synchronized void deposit(double amount){
-        balance += amount;}
-
-    public String getIban() {
-        return iban;
+        this.balance = balance;
     }
 
-    public synchronized void withdraw(double amount){
+
+
+    public void deposit(double amount){
+        balance += amount;
+    }
+
+    public boolean withdraw(double amount){
         if(getBalance()>=amount){
             balance-=amount;
-        }}
+            return true;
+        }
+        return false;
+    }
 
-    public synchronized double getBalance() {
-        return balance;}
+
+    public double getBalance() {
+        return balance;
+    }
 
     @Override
     public String toString() {
