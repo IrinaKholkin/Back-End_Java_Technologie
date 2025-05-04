@@ -16,22 +16,17 @@ public class Main {
         // Установить http-заголовки
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", token);
-
         // получить uri строку UriComponentsBuilder.fromHttpUrl(url)
         // Deprecated.  as of 6.2, in favor of fromUriString(String)
-
         URI uri = UriComponentsBuilder.fromUriString(url)
                 .queryParam("image_url", imgUrl)
                 .queryParam("language", lang)
                 .build()
                 .toUri();
-
         // создали RequestEntity
         RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, uri);
-
         //вызвали restTemplate
         ResponseEntity<TagsResponseDto> response = restTemplate.exchange(request, TagsResponseDto.class);
-
         response.getBody().getResult().getTags().forEach(System.out::println);
         /*
         TagDto[] tags = response.getBody().getResult().getTags();
