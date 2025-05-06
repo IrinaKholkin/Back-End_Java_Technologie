@@ -28,7 +28,7 @@ URI url = UriComponentsBuilder.fromHttpUrl(apiUrl)
         RequestEntity<String> requestEntity = new RequestEntity<>( headers, HttpMethod.GET, url);
         ResponseEntity<TextResponseDto> response = restTemplate.exchange( requestEntity, TextResponseDto.class);
 
-        System.out.println("Распознанный текст" + response.getBody().getResult().getText().get(0).getData());
+//        System.out.println("Распознанный текст" + response.getBody().getResult().getText().get(0).getData());
 
     }
 }

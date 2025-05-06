@@ -2,12 +2,11 @@ package de.ait;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Getter
+import java.util.List;
+
 @NoArgsConstructor
-@ToString
-
+@Getter
 public class TextDto {
-    private String data;
+    private List<DataDto> text;
 }
