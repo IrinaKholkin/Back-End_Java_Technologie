@@ -4,6 +4,8 @@ import de.ait.hw20250513_01.dto.ProgrammerRequestDto;
 import de.ait.hw20250513_01.model.Programmer;
 import de.ait.hw20250513_01.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class ProgrammerController {
     private final TaskService taskService;
 
     @PostMapping
-    public void addProgrammer(@RequestBody ProgrammerRequestDto programmerRequest) {
-        taskService.addProgrammer(programmerRequest);
+    public ResponseEntity<Programmer> addProgrammer(@RequestBody ProgrammerRequestDto programmerRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addProgrammer(programmerRequest));
     }
 
     @GetMapping
@@ -26,8 +28,9 @@ public class ProgrammerController {
     }
 
     @PutMapping("/{programmerId}/tasks/{taskId}")
-    public void addTaskToProgrammer(@PathVariable Long programmerId, @PathVariable Long taskId) {
+    public ResponseEntity<Void> addTaskToProgrammer(@PathVariable Long programmerId, @PathVariable Long taskId) {
         taskService.addTaskProgrammer(programmerId, taskId);
+        return ResponseEntity.noContent().build();
     }
 
 }

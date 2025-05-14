@@ -1,7 +1,11 @@
 package de.ait.hw20250513_01.service;
 
 import de.ait.hw20250513_01.dto.ProgrammerRequestDto;
+import de.ait.hw20250513_01.dto.ProgrammerResponseDto;
 import de.ait.hw20250513_01.dto.TaskRequestDto;
+import de.ait.hw20250513_01.dto.TaskResponseDto;
+import de.ait.hw20250513_01.mappers.ProgrammerMapper;
+import de.ait.hw20250513_01.mappers.TaskMapper;
 import de.ait.hw20250513_01.model.Programmer;
 import de.ait.hw20250513_01.model.Task;
 import de.ait.hw20250513_01.repository.ProgrammerRepository;
@@ -16,23 +20,20 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final ProgrammerRepository programmerRepository;
+    private final TaskMapper taskMapper;
+    private final ProgrammerMapper programmerMapper;
 
     @Override
     public Task addTask(TaskRequestDto taskRequest) {
-        Task task = new Task();
-
-        task.setDescription(taskRequest.getDescription());
-        task.setPriority(taskRequest.getPriority());
-        return taskRepository.save(task);
+        Task task = taskMapper.toEntity(taskRequest);
+        Task savedTask = taskRepository.save(task);
+        return taskMapper.toDto(savedTask);
     }
-
     @Override
     public Programmer addProgrammer(ProgrammerRequestDto programmerRequest) {
-        Programmer programmer = new Programmer();
-        programmer.setName(programmerRequest.getName());
-        return programmerRepository.save(programmer);
+        Programmer programmer = programmerMapper.toEntity(programmerRequest);
+        return programmerMapper.toDto(programmerRepository.save(programmer));
     }
-
     @Override
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
