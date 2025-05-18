@@ -1,9 +1,7 @@
 package de.ait.hw20250513_01.service;
 
 import de.ait.hw20250513_01.dto.ProgrammerRequestDto;
-import de.ait.hw20250513_01.dto.ProgrammerResponseDto;
 import de.ait.hw20250513_01.dto.TaskRequestDto;
-import de.ait.hw20250513_01.dto.TaskResponseDto;
 import de.ait.hw20250513_01.mappers.ProgrammerMapper;
 import de.ait.hw20250513_01.mappers.TaskMapper;
 import de.ait.hw20250513_01.model.Programmer;
@@ -26,14 +24,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task addTask(TaskRequestDto taskRequest) {
         Task task = taskMapper.toEntity(taskRequest);
-        Task savedTask = taskRepository.save(task);
-        return taskMapper.toDto(savedTask);
+        return taskRepository.save(task);
     }
+
     @Override
     public Programmer addProgrammer(ProgrammerRequestDto programmerRequest) {
         Programmer programmer = programmerMapper.toEntity(programmerRequest);
-        return programmerMapper.toDto(programmerRepository.save(programmer));
+        return programmerRepository.save(programmer);
     }
+
     @Override
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
@@ -46,6 +45,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addTaskProgrammer(Long programmerId, Long taskId) {
-        programmerRepository.addTaskToProgrammer(programmerId, taskId);
+        Programmer programmer = programmerRepository.findById(programmerId)
+                .orElseThrow(() -> new RuntimeException("Programmer not found"));
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        programmer.addTask(task);
+        programmerRepository.save(programmer);
     }
 }
